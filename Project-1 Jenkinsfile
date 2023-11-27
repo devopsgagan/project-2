@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+    environment {
+    PATH = "/opt/apache-maven-3.9.5/bin:${PATH}"
+    }    
+    stages {
+        stage('Clone or Checkout Repo') {
+            steps {
+                // Checkout / Cloning the source code from your version control system
+                git 'https://github.com/devopsgagan/Project-1.git'
+            }
+        }
+        stage('Build the Package') {
+            steps {
+                // Building the package using Maven
+                sh 'mvn clean package'
+            }
+        }
+        stage('Deploy the Package') {
+            steps {
+                // Deploying the package using TomCat
+                deploy adapters: [tomcat9(credentialsId: 'tomcat-user', path: '', url: 'http://3.91.150.50:8080/')], contextPath: null, war: '**/*.war'
+            }
+        }
+        post {
+        always {
+            emailext body: '$DEFAULT_CONTENT', subject: '$DEFAULT_SUBJECT', to: '$DEFAULT_RECIPIENTS'
+            }
+        }       
+    }
+}

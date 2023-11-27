@@ -4,12 +4,6 @@ pipeline {
     PATH = "/opt/apache-maven-3.9.5/bin:${PATH}"
     }    
     stages {
-        stage('Clone or Checkout Repo') {
-            steps {
-                // Checkout / Cloning the source code from your version control system
-                git 'https://github.com/devopsgagan/Project-1.git'
-            }
-        }
         stage('Build the Package') {
             steps {
                 // Building the package using Maven

@@ -25,6 +25,7 @@ pipeline {
     }
     post {
         always {
+                // Handling of post-build actions for success and failure.
             emailext body: '$DEFAULT_CONTENT', replyTo: 'gagkum143@gmail.com', subject: '$DEFAULT_SUBJECT', to: 'gagkum143@gmail.com'
             }
         }

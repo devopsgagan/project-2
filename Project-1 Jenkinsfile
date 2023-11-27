@@ -10,6 +10,12 @@ pipeline {
                 sh 'mvn clean package'
             }
         }
+        stage('Test the Package') {
+            steps {
+                // Testing the package using Maven Test
+                sh 'mvn test'
+            }
+        }
         stage('Deploy the Package') {
             steps {
                 // Deploying the package using TomCat Server

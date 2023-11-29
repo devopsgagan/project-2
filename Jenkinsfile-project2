@@ -28,6 +28,11 @@ pipeline {
                 deploy adapters: [tomcat9(credentialsId: 'tomcat-user', path: '', url: 'http://3.94.165.96:8080/')], contextPath: null, war: '**/*.war'
             }
         }
+        stage('Upload to Nexus') {
+            steps {
+                nexusArtifactUploader artifacts: [[artifactId: 'student-task-tracker', classifier: '', file: 'target/student-task-tracker.war', type: 'war']], credentialsId: 'nexus-repo', groupId: 'com.example', nexusUrl: '3.83.29.192:8081/', nexusVersion: 'nexus3', protocol: 'http', repository: 'maven-snapshots', version: '1.0.0-SNAPSHOT'
+            }
+        }
     }
     post {
         always {
